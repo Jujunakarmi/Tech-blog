@@ -48,7 +48,7 @@ app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
 
 // Turns on routes
-// app.use(routes);
+app.use(routes);
 
 // Turns on connection to database and server
 sequelize.sync({ force: false }).then(() => {

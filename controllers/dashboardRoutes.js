@@ -1,13 +1,14 @@
 const router = require('express').Router();
 
 
+
 router.get('/',(req, res) => {
   try {
-   res.send('user route')
+res.send('Dashboard')
+  
   } catch (err) {
-    res.status(400).json(err);
+    console.log(err);
+    res.status(500).json(err);
   }
 });
-
-
 module.exports = router;
