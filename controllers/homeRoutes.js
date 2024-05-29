@@ -35,6 +35,41 @@ router.get('/', async(req, res) => {
   }
 });
 
+router.get('/users', async (req, res) => {
+  try {
+    const data = await User.findAll();
+    res.status(200).json(data);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+router.get('/users/:id', async (req, res) => {
+  try {
+    const userData = await User.findByPk(req.params.id);
+    if (!userData) {
+      res.status(404).json({ message: "No user was found with this ID!" });
+    }
+    const user = userData.get({ plain: true });
+    res.render('userProfiles', {
+      ...user,
+      user,
+      logged_in: req.session.logged_in,
+    });
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+
+router.get('/login', (req, res) => {
+  if(req.session.logged_in){
+    res.redirect('/dashboard');
+    return;
+  }
+  res.render('login')
+});
+
 router.get('/signup', (req, res) => {
   if (req.session.logged_in) {
     res.redirect("/");
