@@ -112,7 +112,10 @@ router.post('/login', async (req, res) => {
       });
       return;
     }
+
+    // console.log(req.body.password)
     const validPassword = await userData.checkPassword(req.body.password);
+    // const comparedEmail = await userData.email_type(req.body.email)
 
     if (!validPassword) {
       res.status(400).json({
@@ -122,12 +125,13 @@ router.post('/login', async (req, res) => {
     }
     req.session.save(() => {
       req.session.user_id = userData.id;
-      req.session.username = userData.username;
+     req.session.username = userData.username;
       req.session.email = userData.email;
       req.session.logged_in = true;
       res.json({ user: userData, message: 'You are now logged in!' });
     });
   } catch (err) {
+    console.log(err)
     res.status(400).json(err);
   }
 });

@@ -35,6 +35,8 @@ router.get('/', async(req, res) => {
   }
 });
 
+
+
 router.get('/users', async (req, res) => {
   try {
     const data = await User.findAll();
