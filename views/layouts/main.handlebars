@@ -7,13 +7,25 @@
 </head>
 
 <h1>Tech Blog</h1>
-
 <nav>
+{{#if logged_in}}
+<ul>
+        <li><a href="/" id="main-title">Homepage</a></li>
+        <li><a href="/dashboard" id="dashboard">Dashboard</a></li>
+        {{!-- YET TO DO --}}
+        <li><a href="/create" id="create">Create</a></li>
+        <li><a href="/logout" id="logout">Logout</a></li>
+    </ul>
+
+{{else}}
+
     <ul>
         <li><a href="/" id="main-title">Homepage</a></li>
         <li><a href="/login" id="login">Log In</a></li>
         <li><a href="/signup" id="signup">Sign Up</a></li>
     </ul>
+
+    {{/if}}
 </nav>
 <main>
 {{{ body }}}
