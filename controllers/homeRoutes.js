@@ -36,6 +36,40 @@ router.get('/', async(req, res) => {
 });
 
 
+router.get('/post/:id', async (req, res) => {
+ try{
+  const postData = await Post.findByPk(req.params.id,{
+  attributes: ['id', 'title', 'post_body', 'created_at', 'updated_at'],
+  include :[
+    {
+      model: User,
+      attributes: ['username']
+    },
+    {
+      model: Comment,
+      attributes: [
+        'id', 'comment_body', 'user_id', 'post_id', 'created_at'
+      ],
+      include: {
+        model: User,
+        attributes:['username']
+      }
+    }
+  ]
+  })
+  const post = postData.get({plain: true});
+  const comment = postData.comments.map((test) => test.get({plain: true}));
+  res.render('singlePost', {
+    post,
+    comment,
+    logged_in: req.session.logged_in,
+  })
+ }catch(err){
+  console.log(err)
+  res.status(500).json(err);
+ }
+})
+
 
 router.get('/users', async (req, res) => {
   try {
